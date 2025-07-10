@@ -1,5 +1,4 @@
-import { Plus } from "lucide-react";
-import { motion } from "motion/dist/react";
+import { motion } from "framer-motion";
 import Tabs from "./Tabs";
 
 interface NavProps {
@@ -16,6 +15,10 @@ export function Navigation({ setActiveTab, addNewTab, tabs }: NavProps) {
     }
   };
 
+  const handleCancelClick = () => {
+    console.log("Cancel clicked");
+  };
+
   return (
     <div className="fixed top-0 z-10">
       <div className="p-4">
@@ -28,13 +31,20 @@ export function Navigation({ setActiveTab, addNewTab, tabs }: NavProps) {
               {listName} {/* Pass the listName as children to display */}
             </Tabs>
           ))}
+          <motion.button
+            onClick={handleCancelClick}
+            id="cancel"
+            className="justify-center text-black rounded-full px-3 py-2"
+            whileTap={{ scale: 0.95 }}>
+            Cancel
+          </motion.button>
 
           <motion.button
             onClick={handleAddClick}
-            className="justify-center bg-black border-white border rounded-full p-1.5"
-            id="plus-tab"
+            id="create"
+            className="justify-center bg-black text-white rounded-full px-3 py-2"
             whileTap={{ scale: 0.95 }}>
-            <Plus className="size-6 text-white" />
+            Create
           </motion.button>
         </div>
       </div>

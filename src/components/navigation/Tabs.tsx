@@ -9,7 +9,7 @@ interface TabProps {
 const Tabs = ({ onClick, animationProps, children }: TabProps) => {
   return (
     <motion.button
-      className="text-2xl bg-black text-white border-white border rounded-full py-0.5 px-3"
+      className="text-2xl bg-black text-white border rounded-full py-0.5 px-3"
       onClick={onClick}
       whileTap={{ scale: 0.95 }}
       {...animationProps}>
