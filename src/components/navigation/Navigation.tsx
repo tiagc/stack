@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
 import { motion } from "motion/dist/react";
-import Tabs from "./NavigationTabs";
+import Tabs from "./Tabs";
 
 interface NavProps {
   setActiveTab: (tab: string) => void;
