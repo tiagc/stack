@@ -32,7 +32,7 @@ export function Navigation({ onNewStack }: NavProps) {
   }, [isCreating]);
 
   return (
-    <div className="fixed top-0 z-10 w-full">
+    <div className="fixed top-0 z-10 w-full bg-white">
       <div className="p-4">
         <div className="flex justify-between items-center">
           <div className="w-[80px] flex justify-start">
@@ -66,12 +66,13 @@ export function Navigation({ onNewStack }: NavProps) {
           </div>
         </div>
 
-        {/* input appears on creationMode */}
+        {/* creation mode UI */}
         {isCreating && (
           <motion.div
-            className="mt-4"
+            className="mt-4 mb-4 px-4 space-y-6"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}>
+            {/* Input */}
             <input
               ref={inputRef}
               type="text"
@@ -81,8 +82,65 @@ export function Navigation({ onNewStack }: NavProps) {
                 if (e.key === "Enter") handleCreateClick();
               }}
               placeholder="Name your habit"
-              className="w-full text-2xl px-4 py-4 text-black bg-transparent outline-none focus:outline-none focus:ring-0 border-none"
+              className="w-full text-2xl text-black bg-transparent outline-none border-none"
             />
+
+            <hr className="border-gray-300" />
+
+            {/* suggested */}
+            <div className="space-y-4">
+              <h3 className="text-sm text-gray-400">Suggested</h3>
+              <div className="flex gap-2 flex-wrap">
+                {["Meditate", "Run", "Read a book"].map((suggestion, index) => {
+                  const bgColors = [
+                    "bg-stackGreen",
+                    "bg-stackBlue",
+                    "bg-yellow-200",
+                  ];
+                  const bgColor = bgColors[index % bgColors.length];
+
+                  return (
+                    <button
+                      key={suggestion}
+                      onClick={() => setNewStackName(suggestion)}
+                      className={`text-sm px-4 py-2 rounded-full transition hover:bg-gray-200 ${bgColor}`}>
+                      {suggestion}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <hr className="border-gray-300" />
+
+            {/* daily goal */}
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm text-gray-400">Daily goal per day</h3>
+              <input
+                type="number"
+                min={1}
+                placeholder=""
+                className="w-32 px-4 py-2 border rounded-full outline-none"
+              />
+            </div>
+
+            <hr className="border-gray-300" />
+
+            {/* days */}
+            <div className="space-y-4">
+              <h3 className="text-sm text-gray-400">Days</h3>
+              <div className="flex flex-wrap gap-2">
+                {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
+                  (day) => (
+                    <button
+                      key={day}
+                      className="w-10 h-10 flex items-center justify-center rounded-full border border-black p-2 text-xs">
+                      {day}
+                    </button>
+                  )
+                )}
+              </div>
+            </div>
           </motion.div>
         )}
       </div>

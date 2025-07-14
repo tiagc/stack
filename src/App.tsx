@@ -54,7 +54,7 @@ function App() {
     <div className="relative min-h-screen">
       <Navigation onNewStack={addNewStack} />
       {stacks.length > 0 && (
-        <h2 className="px-8 mt-36 mb-2 text-sm text-gray-500">
+        <h2 className="px-8 mt-36 mb-2 text-sm text-stackGray">
           Habits and routines
         </h2>
       )}
