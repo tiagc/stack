@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { Navigation } from "./components/navigation/Navigation";
 import { Stack } from "./components/Stack";
@@ -6,8 +7,10 @@ import "./styles.css";
 interface StackItem {
   id: number;
   label: string;
-  checked: boolean;
   color: string;
+  days: string[];
+  goalPerDay: number;
+  currentProgress: number;
 }
 
 const stackColors = [
@@ -24,26 +27,35 @@ const stackColors = [
 ];
 function App() {
   const [stacks, setStacks] = useState<StackItem[]>([]);
+  const [isCreating, setIsCreating] = useState(false);
+
+  const incrementProgress = (id: number) => {
+    setStacks((prev) =>
+      prev.map((stack) =>
+        stack.id === id && stack.currentProgress < stack.goalPerDay
+          ? { ...stack, currentProgress: stack.currentProgress + 1 }
+          : stack
+      )
+    );
+  };
 
   const getRandomColor = () =>
     stackColors[Math.floor(Math.random() * stackColors.length)];
 
-  const addNewStack = (label: string) => {
+  const addNewStack = (data: {
+    label: string;
+    goalPerDay: number;
+    days: string[];
+  }) => {
     const newStack: StackItem = {
       id: Date.now(),
-      label,
-      checked: false,
+      label: data.label,
+      goalPerDay: data.goalPerDay,
+      days: data.days,
       color: getRandomColor(),
+      currentProgress: 0,
     };
     setStacks((prev) => [...prev, newStack]);
-  };
-
-  const toggleStack = (id: number) => {
-    setStacks((prev) =>
-      prev.map((stack) =>
-        stack.id === id ? { ...stack, checked: !stack.checked } : stack
-      )
-    );
   };
 
   const deleteStack = (id: number) => {
@@ -51,10 +63,18 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen">
-      <Navigation onNewStack={addNewStack} />
+    <motion.div
+      animate={{ marginTop: isCreating ? 457 : 0 }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
+      className="relative min-h-screen">
+      <Navigation
+        onNewStack={addNewStack}
+        isCreating={isCreating}
+        setIsCreating={setIsCreating}
+      />
+
       {stacks.length > 0 && (
-        <h2 className="px-8 mt-36 mb-2 text-sm text-stackGray">
+        <h2 className="px-8 mt-8 mb-2 text-sm text-gray-400">
           Habits and routines
         </h2>
       )}
@@ -64,12 +84,12 @@ function App() {
           <Stack
             key={stack.id}
             {...stack}
-            onToggle={() => toggleStack(stack.id)}
             onDelete={() => deleteStack(stack.id)}
+            onIncrement={() => incrementProgress(stack.id)}
           />
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
 

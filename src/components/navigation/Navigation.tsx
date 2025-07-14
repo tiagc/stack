@@ -2,25 +2,44 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 interface NavProps {
-  onNewStack: (label: string) => void;
+  onNewStack: (data: {
+    label: string;
+    goalPerDay: number;
+    days: string[];
+  }) => void;
+  isCreating: boolean;
+  setIsCreating: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function Navigation({ onNewStack }: NavProps) {
-  const [isCreating, setIsCreating] = useState(false);
+export function Navigation({
+  onNewStack,
+  isCreating,
+  setIsCreating,
+}: NavProps) {
   const [newStackName, setNewStackName] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [goalPerDay, setGoalPerDay] = useState("1");
+  const [selectedDays, setSelectedDays] = useState<string[]>([]);
 
   const handleCancelClick = () => {
     setIsCreating(false);
     setNewStackName("");
+    setGoalPerDay("1");
+    setSelectedDays([]);
   };
 
   const handleCreateClick = () => {
     if (!isCreating) {
       setIsCreating(true);
     } else if (newStackName.trim() !== "") {
-      onNewStack(newStackName.trim());
+      onNewStack({
+        label: newStackName.trim(),
+        goalPerDay: parseInt(goalPerDay) || 0,
+        days: selectedDays,
+      });
       setNewStackName("");
+      setGoalPerDay("1");
+      setSelectedDays([]);
       setIsCreating(false);
     }
   };
@@ -32,7 +51,7 @@ export function Navigation({ onNewStack }: NavProps) {
   }, [isCreating]);
 
   return (
-    <div className="fixed top-0 z-10 w-full bg-white">
+    <div className="fixed top-0 z-10 w-full">
       <div className="p-4">
         <div className="flex justify-between items-center">
           <div className="w-[80px] flex justify-start">
@@ -69,10 +88,9 @@ export function Navigation({ onNewStack }: NavProps) {
         {/* creation mode UI */}
         {isCreating && (
           <motion.div
-            className="mt-4 mb-4 px-4 space-y-6"
+            className="mb-4 px-4 space-y-6"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}>
-            {/* Input */}
             <input
               ref={inputRef}
               type="text"
@@ -103,7 +121,7 @@ export function Navigation({ onNewStack }: NavProps) {
                     <button
                       key={suggestion}
                       onClick={() => setNewStackName(suggestion)}
-                      className={`text-sm px-4 py-2 rounded-full transition hover:bg-gray-200 ${bgColor}`}>
+                      className={`text-sm px-4 font-semibold py-2 rounded-full transition hover:bg-gray-200 ${bgColor}`}>
                       {suggestion}
                     </button>
                   );
@@ -118,7 +136,13 @@ export function Navigation({ onNewStack }: NavProps) {
               <h3 className="text-sm text-gray-400">Daily goal per day</h3>
               <input
                 type="number"
-                min={1}
+                min={0}
+                max={100}
+                value={goalPerDay}
+                onChange={(e) => setGoalPerDay(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleCreateClick();
+                }}
                 placeholder=""
                 className="w-32 px-4 py-2 border rounded-full outline-none"
               />
@@ -129,15 +153,29 @@ export function Navigation({ onNewStack }: NavProps) {
             {/* days */}
             <div className="space-y-4">
               <h3 className="text-sm text-gray-400">Days</h3>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap justify-between">
                 {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
-                  (day) => (
-                    <button
-                      key={day}
-                      className="w-10 h-10 flex items-center justify-center rounded-full border border-black p-2 text-xs">
-                      {day}
-                    </button>
-                  )
+                  (day) => {
+                    const isSelected = selectedDays.includes(day);
+                    return (
+                      <button
+                        key={day}
+                        onClick={() =>
+                          setSelectedDays((prev) =>
+                            prev.includes(day)
+                              ? prev.filter((d) => d !== day)
+                              : [...prev, day]
+                          )
+                        }
+                        className={`w-10 h-10 flex items-center justify-center rounded-full border p-2 text-xs ${
+                          isSelected
+                            ? "bg-black text-white border-black"
+                            : "border-black"
+                        }`}>
+                        {day}
+                      </button>
+                    );
+                  }
                 )}
               </div>
             </div>
