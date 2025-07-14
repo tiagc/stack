@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { LucidePlus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 interface NavProps {
@@ -46,21 +47,20 @@ export function Navigation({
 
   useEffect(() => {
     if (isCreating && inputRef.current) {
-      inputRef.current.focus();
+      // inputRef.current.focus();
     }
   }, [isCreating]);
 
   return (
-    <div className="fixed top-0 z-10 w-full">
+    <div className="w-full z-50">
       <div className="p-4">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center px-4">
           <div className="w-[80px] flex justify-start">
             <AnimatePresence>
               {isCreating && (
                 <motion.button
                   key="cancel"
                   onClick={handleCancelClick}
-                  className="text-black rounded-full px-3 py-2"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
@@ -88,7 +88,7 @@ export function Navigation({
         {/* creation mode UI */}
         {isCreating && (
           <motion.div
-            className="mb-4 px-4 space-y-6"
+            className="my-4 px-4 space-y-6 bg-white"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}>
             <input
@@ -133,7 +133,7 @@ export function Navigation({
 
             {/* daily goal */}
             <div className="flex items-center justify-between">
-              <h3 className="text-sm text-gray-400">Daily goal per day</h3>
+              <h3 className="text-sm text-gray-400">Daily goal</h3>
               <input
                 type="number"
                 min={0}
@@ -144,7 +144,7 @@ export function Navigation({
                   if (e.key === "Enter") handleCreateClick();
                 }}
                 placeholder=""
-                className="w-32 px-4 py-2 border rounded-full outline-none"
+                className="w-32 px-4 py-3 border rounded-full outline-none text-end text-sm"
               />
             </div>
 
@@ -178,6 +178,23 @@ export function Navigation({
                   }
                 )}
               </div>
+            </div>
+
+            <div className="flex items-center justify-end">
+              <button
+                type="button"
+                onClick={handleCreateClick}
+                disabled={
+                  newStackName.trim() === "" || selectedDays.length === 0
+                }
+                className={`bg-black text-white rounded-full h-10 px-4 py-8 flex items-center gap-2 ${
+                  newStackName.trim() === "" || selectedDays.length === 0
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-gray-800"
+                }`}>
+                <span className="text-sm">Add Stack</span>
+                <LucidePlus className="size-4" />
+              </button>
             </div>
           </motion.div>
         )}

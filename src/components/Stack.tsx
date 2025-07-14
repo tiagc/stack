@@ -20,17 +20,31 @@ export function Stack(props: {
     <motion.ul className="relative">
       <motion.li
         onClick={props.onIncrement}
-        className="text-black font-bold text-2xl rounded-full mx-6 mb-1 px-3 py-6 flex items-center justify-between overflow-hidden relative cursor-pointer border border-black"
-        whileTap={{ scale: 0.97 }}
-        initial={{ opacity: 0, y: -50, scale: 0.8 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: -50, scale: 0.8 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
+        className="text-black font-bold text-2xl rounded-full mx-6 mb-4 px-3 py-6 flex items-center justify-between overflow-hidden relative cursor-pointer border border-black"
+        whileTap={{ scale: 0.9 }}
+        initial={{ opacity: 0, y: -40, scale: 0.85 }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          scale: 1.05,
+          transition: {
+            type: "spring",
+            stiffness: 300,
+            damping: 20,
+            bounce: 0.4,
+          },
+        }}
+        exit={{
+          opacity: 0,
+          y: -40,
+          scale: 0.8,
+          transition: { duration: 0.3, ease: "easeInOut" },
+        }}>
         <motion.div
           className={`absolute top-0 left-0 h-full ${props.color} rounded-full z-0`}
           initial={false}
           animate={{ width: `${progressPercent}%` }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         />
         <div className="relative z-10 flex items-center justify-between w-full">
           <span className="ml-3">{props.label}</span>
@@ -43,8 +57,9 @@ export function Stack(props: {
                 e.stopPropagation();
                 props.onDelete();
               }}
-              className="rounded-full transition duration-150 ease-in">
-              <X className="size-6" />
+              className="rounded-full transition duration-150 ease-in hover:bg-gray-200 p-1"
+              aria-label={`Delete habit ${props.label}`}>
+              <X className="w-6 h-6" />
             </button>
           </div>
         </div>

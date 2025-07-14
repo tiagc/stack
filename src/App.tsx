@@ -63,33 +63,30 @@ function App() {
   };
 
   return (
-    <motion.div
-      animate={{ marginTop: isCreating ? 457 : 0 }}
-      transition={{ duration: 0.4, ease: "easeInOut" }}
-      className="relative min-h-screen">
+    <div className="relative min-h-screen">
       <Navigation
         onNewStack={addNewStack}
         isCreating={isCreating}
         setIsCreating={setIsCreating}
       />
 
-      {stacks.length > 0 && (
-        <h2 className="px-8 mt-8 mb-2 text-sm text-gray-400">
-          Habits and routines
-        </h2>
-      )}
+      <motion.div layout transition={{ duration: 0.2, ease: "easeInOut" }}>
+        {stacks.length > 0 && (
+          <h2 className="px-8 text-sm text-gray-400">Habits and routines</h2>
+        )}
 
-      <div className="mt-4">
-        {stacks.map((stack) => (
-          <Stack
-            key={stack.id}
-            {...stack}
-            onDelete={() => deleteStack(stack.id)}
-            onIncrement={() => incrementProgress(stack.id)}
-          />
-        ))}
-      </div>
-    </motion.div>
+        <div className="mt-4">
+          {stacks.map((stack) => (
+            <Stack
+              key={stack.id}
+              {...stack}
+              onDelete={() => deleteStack(stack.id)}
+              onIncrement={() => incrementProgress(stack.id)}
+            />
+          ))}
+        </div>
+      </motion.div>
+    </div>
   );
 }
 
