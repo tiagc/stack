@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-  @apply font-neue tracking-tight;
+  @apply font-neue tracking-tight bg-white dark:bg-black;
 }

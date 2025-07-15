@@ -45,7 +45,7 @@ export function ClipPath({
 
   return (
     <div
-      className={`relative flex flex-col items-center w-fit mx-auto bg-gray-200 rounded-full ${className}`}>
+      className={`relative flex flex-col items-center w-fit mx-auto bg-white dark:bg-black rounded-full ${className}`}>
       {/* visible */}
       <ul className="relative flex justify-center gap-2 w-full">
         {tabs.map((tab) => (
@@ -53,7 +53,7 @@ export function ClipPath({
             <button
               ref={activeTab === tab.name ? activeTabRef : null}
               onClick={() => handleTabClick(tab.name)}
-              className="flex items-center gap-2 px-4 h-9 text-sm text-black rounded-full">
+              className="flex items-center gap-2 px-4 h-9 text-sm text-black dark:text-white rounded-full">
               {tab.name}
             </button>
           </li>
@@ -64,10 +64,15 @@ export function ClipPath({
       <div
         aria-hidden
         ref={containerRef}
-        className="absolute z-10 w-full overflow-hidden transition-[clip-path,color] duration-300 ease-in-out bg-black"
-        style={{
-          color: activeTab ? "white" : "black",
-        }}>
+        className={`
+        absolute z-10 w-full overflow-hidden transition-[clip-path,color] duration-300 ease-in-out
+      bg-black dark:bg-white
+        ${
+          activeTab
+            ? "text-white dark:text-black"
+            : "text-black dark:text-white"
+        }
+        `}>
         <ul className="flex justify-center gap-2 w-full">
           {tabs.map((tab) => (
             <li key={tab.name}>

@@ -20,8 +20,8 @@ export function Stack(props: {
     <motion.ul className="relative">
       <motion.li
         onClick={props.onIncrement}
-        className="text-black font-bold text-2xl rounded-full mx-6 mb-4 px-3 py-6 flex items-center justify-between overflow-hidden relative cursor-pointer border border-black"
-        whileTap={{ scale: 0.9 }}
+        className="text-black dark:text-white font-bold text-2xl rounded-full mx-6 mb-4 px-3 py-6 flex items-center justify-between overflow-hidden relative cursor-pointer border border-black dark:border-white"
+        whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, y: -40, scale: 0.85 }}
         animate={{
           opacity: 1,

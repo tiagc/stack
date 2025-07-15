@@ -51,7 +51,7 @@ export function CreationMode({
   }, [isCreating]);
 
   return (
-    <div className="bg-white w-full z-50">
+    <div className="bg-white dark:bg-black w-full z-50">
       <div className="p-4">
         <div className="flex justify-between items-center px-4">
           <div className="w-[80px] flex justify-start">
@@ -59,6 +59,7 @@ export function CreationMode({
               {isCreating && (
                 <motion.button
                   key="cancel"
+                  className="text-black dark:text-white"
                   onClick={handleCancelClick}
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -73,7 +74,7 @@ export function CreationMode({
           <div className="w-[80px] flex justify-end">
             <motion.button
               onClick={handleCreateClick}
-              className={`bg-black text-white rounded-full px-3 py-2 ${
+              className={`bg-black text-white dark:bg-white dark:text-black rounded-full px-3 py-2 ${
                 isCreating
                   ? "opacity-60 transition duration-300"
                   : "transition duration-300"
@@ -86,7 +87,7 @@ export function CreationMode({
 
         {isCreating && (
           <motion.div
-            className="bg-white my-4 px-4 space-y-6"
+            className="my-4 px-4 space-y-6"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}>
             <input
@@ -98,14 +99,16 @@ export function CreationMode({
                 if (e.key === "Enter") handleCreateClick();
               }}
               placeholder="Name your habit"
-              className="w-full text-2xl text-black placeholder-gray-400 bg-transparent outline-none border-none antialiased"
+              className="w-full text-2xl text-black dark:text-white placeholder-gray-400 bg-transparent outline-none border-none antialiased"
             />
 
             <hr className="border-gray-300" />
 
             {/* suggested */}
             <div className="space-y-4">
-              <h3 className="text-sm text-gray-400">Suggested</h3>
+              <h3 className="text-sm text-gray-400 dark:text-gray-300">
+                Suggested
+              </h3>
               <div className="flex gap-2 flex-wrap">
                 {["Meditate", "Run", "Read a book"].map((suggestion, index) => {
                   const bgColors = [
@@ -119,7 +122,7 @@ export function CreationMode({
                     <button
                       key={suggestion}
                       onClick={() => setNewStackName(suggestion)}
-                      className={`text-sm px-4 font-semibold py-2 rounded-full transition hover:bg-gray-200 ${bgColor}`}>
+                      className={`text-sm text-black px-4 font-semibold py-2 rounded-full transition active:bg-gray-200 ${bgColor}`}>
                       {suggestion}
                     </button>
                   );
@@ -131,7 +134,9 @@ export function CreationMode({
 
             {/* daily goal */}
             <div className="flex items-center justify-between">
-              <h3 className="text-sm text-gray-400">Daily goal</h3>
+              <h3 className="text-sm text-gray-400 dark:text-gray-300">
+                Daily goal
+              </h3>
               <input
                 type="number"
                 min={0}
@@ -142,7 +147,7 @@ export function CreationMode({
                   if (e.key === "Enter") handleCreateClick();
                 }}
                 placeholder=""
-                className="w-32 px-4 py-3 border rounded-full outline-none text-end text-sm"
+                className="w-32 px-4 py-2 border rounded-full outline-none text-end text-sm"
               />
             </div>
 
@@ -150,7 +155,7 @@ export function CreationMode({
 
             {/* days */}
             <div className="space-y-4">
-              <h3 className="text-sm text-gray-400">Days</h3>
+              <h3 className="text-sm text-gray-400 dark:text-gray-300">Days</h3>
               <div className="flex flex-wrap justify-between">
                 {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
                   (day) => {
@@ -165,10 +170,10 @@ export function CreationMode({
                               : [...prev, day]
                           )
                         }
-                        className={`size-10 flex items-center justify-center rounded-full border p-2 text-xs ${
+                        className={`size-10 flex items-center justify-center rounded-full border border-black dark:border-white p-2 text-xs ${
                           isSelected
-                            ? "bg-black text-white border-black"
-                            : "border-black"
+                            ? "bg-black text-white dark:bg-white dark:text-black"
+                            : "dark:text-white"
                         }`}>
                         {day}
                       </button>
