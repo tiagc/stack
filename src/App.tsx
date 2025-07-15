@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Navigation } from "./components/navigation/Navigation";
+import { CreationMode } from "./components/navigation/CreationMode";
+import { Footer } from "./components/navigation/Footer";
 import { Stack } from "./components/Stack";
 import "./styles.css";
 
@@ -25,6 +26,7 @@ const stackColors = [
   "bg-stackMint",
   "bg-stackGray",
 ];
+
 function App() {
   const [stacks, setStacks] = useState<StackItem[]>([]);
   const [isCreating, setIsCreating] = useState(false);
@@ -64,7 +66,7 @@ function App() {
 
   return (
     <div className="relative min-h-screen">
-      <Navigation
+      <CreationMode
         onNewStack={addNewStack}
         isCreating={isCreating}
         setIsCreating={setIsCreating}
@@ -86,6 +88,7 @@ function App() {
           ))}
         </div>
       </motion.div>
+      <Footer />
     </div>
   );
 }
