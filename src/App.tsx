@@ -74,7 +74,7 @@ function App() {
 
       <motion.div layout transition={{ duration: 0.2, ease: "easeInOut" }}>
         {stacks.length > 0 && (
-          <h2 className="sticky top-0 z-10 px-8 py-2 text-sm text-gray-400 dark:text-gray-300">
+          <h2 className="sticky top-0 z-10 pt-4 px-8 text-sm text-gray-400 dark:text-gray-300">
             Habits and routines
           </h2>
         )}

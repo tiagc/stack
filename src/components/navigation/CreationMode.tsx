@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { LucidePlus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 interface CreateProps {
@@ -20,6 +21,12 @@ export function CreationMode({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [goalPerDay, setGoalPerDay] = useState("1");
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
+
+  let suggestions = [
+    { label: "Meditate", bgColor: "bg-stackGreen" },
+    { label: "Run", bgColor: "bg-stackBlue" },
+    { label: "Read a book", bgColor: "bg-yellow-200" },
+  ];
 
   const handleCancelClick = () => {
     setIsCreating(false);
@@ -99,7 +106,7 @@ export function CreationMode({
                 if (e.key === "Enter") handleCreateClick();
               }}
               placeholder="Name your habit"
-              className="w-full text-2xl text-black dark:text-white placeholder-gray-400 bg-transparent outline-none border-none antialiased"
+              className="w-full text-2xl text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-300 bg-transparent outline-none border-none antialiased"
             />
 
             <hr className="border-gray-300" />
@@ -110,21 +117,23 @@ export function CreationMode({
                 Suggested
               </h3>
               <div className="flex gap-2 flex-wrap">
-                {["Meditate", "Run", "Read a book"].map((suggestion, index) => {
-                  const bgColors = [
-                    "bg-stackGreen",
-                    "bg-stackBlue",
-                    "bg-yellow-200",
-                  ];
-                  const bgColor = bgColors[index % bgColors.length];
+                {suggestions.map(({ label, bgColor }) => {
+                  const isSelected = newStackName === label;
 
                   return (
-                    <button
-                      key={suggestion}
-                      onClick={() => setNewStackName(suggestion)}
-                      className={`text-sm text-black px-4 font-semibold py-2 rounded-full transition active:bg-gray-200 ${bgColor}`}>
-                      {suggestion}
-                    </button>
+                    <motion.button
+                      key={label}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setNewStackName(label)}
+                      aria-pressed={isSelected}
+                      className={`text-sm px-4 font-semibold py-2 rounded-full transition-colors duration-300
+                      ${
+                        isSelected
+                          ? "bg-black text-white dark:bg-white dark:text-black"
+                          : `${bgColor} text-black`
+                      }`}>
+                      {label}
+                    </motion.button>
                   );
                 })}
               </div>
@@ -161,8 +170,9 @@ export function CreationMode({
                   (day) => {
                     const isSelected = selectedDays.includes(day);
                     return (
-                      <button
+                      <motion.button
                         key={day}
+                        whileTap={{ scale: 0.95 }}
                         onClick={() =>
                           setSelectedDays((prev) =>
                             prev.includes(day)
@@ -176,29 +186,31 @@ export function CreationMode({
                             : "dark:text-white"
                         }`}>
                         {day}
-                      </button>
+                      </motion.button>
                     );
                   }
                 )}
               </div>
             </div>
 
-            {/* <div className="flex items-center justify-end">
+            <hr className="border-gray-300" />
+
+            <div className="flex items-center justify-end">
               <button
                 type="button"
                 onClick={handleCreateClick}
                 disabled={
                   newStackName.trim() === "" || selectedDays.length === 0
                 }
-                className={`bg-black text-white rounded-full h-10 px-4 py-8 flex items-center gap-2 ${
+                className={`bg-black text-white dark:bg-white dark:text-black rounded-full h-10 px-3 py-2 flex items-center gap-2 ${
                   newStackName.trim() === "" || selectedDays.length === 0
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:bg-gray-800"
+                    ? "opacity-50"
+                    : ""
                 }`}>
-                <span className="text-sm">Add Stack</span>
+                <span>Stack</span>
                 <LucidePlus className="size-4" />
               </button>
-            </div> */}
+            </div>
           </motion.div>
         )}
       </div>

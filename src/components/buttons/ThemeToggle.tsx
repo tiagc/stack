@@ -76,7 +76,7 @@ export function ThemeToggle() {
             className="flex items-center">
             <ClipPath
               tabs={tabs.map(({ name, label }) => ({ name: label }))}
-              className="bg-white dark:bg-black"
+              className="bg-transparent"
               activeTab={tabs.find((t) => t.name === activeTheme)?.label ?? ""}
               onTabChange={(label) => {
                 const tab = tabs.find((t) => t.label === label);

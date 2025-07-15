@@ -45,7 +45,7 @@ export function ClipPath({
 
   return (
     <div
-      className={`relative flex flex-col items-center w-fit mx-auto bg-white dark:bg-black rounded-full ${className}`}>
+      className={`relative flex flex-col items-center w-fit mx-auto bg-transparent rounded-full ${className}`}>
       {/* visible */}
       <ul className="relative flex justify-center gap-2 w-full">
         {tabs.map((tab) => (
