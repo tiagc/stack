@@ -25,7 +25,8 @@ export function CreationMode({
   let suggestions = [
     { label: "Meditate", bgColor: "bg-stackGreen" },
     { label: "Run", bgColor: "bg-stackBlue" },
-    { label: "Read a book", bgColor: "bg-yellow-200" },
+    { label: "Read a book", bgColor: "bg-stackYellow" },
+    { label: "Have sex", bgColor: "bg-stackRed" },
   ];
 
   const handleCancelClick = () => {
@@ -116,26 +117,31 @@ export function CreationMode({
               <h3 className="text-sm text-gray-400 dark:text-gray-300">
                 Suggested
               </h3>
-              <div className="flex gap-2 flex-wrap">
-                {suggestions.map(({ label, bgColor }) => {
-                  const isSelected = newStackName === label;
 
-                  return (
-                    <motion.button
-                      key={label}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => setNewStackName(label)}
-                      aria-pressed={isSelected}
-                      className={`text-sm px-4 font-semibold py-2 rounded-full transition-colors duration-300
-                      ${
-                        isSelected
-                          ? "bg-black text-white dark:bg-white dark:text-black"
-                          : `${bgColor} text-black`
-                      }`}>
-                      {label}
-                    </motion.button>
-                  );
-                })}
+              <div className="relative">
+                <div className="overflow-x-auto scrollbar-hide">
+                  <div className="flex gap-2 flex-nowrap whitespace-nowrap">
+                    {suggestions.map(({ label, bgColor }) => {
+                      const isSelected = newStackName === label;
+
+                      return (
+                        <motion.button
+                          key={label}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => setNewStackName(label)}
+                          aria-pressed={isSelected}
+                          className={`text-sm px-4 font-semibold py-2 rounded-full transition-colors duration-300 shrink-0
+                          ${
+                            isSelected
+                              ? "bg-black text-white dark:bg-white dark:text-black"
+                              : `${bgColor} text-black`
+                          }`}>
+                          {label}
+                        </motion.button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
 
