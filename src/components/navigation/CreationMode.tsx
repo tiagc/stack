@@ -89,7 +89,6 @@ export function CreationMode({
                   : "transition duration-300"
               }`}>
               <motion.div
-                whileTap={{ scale: 0.95 }}
                 animate={{ rotate: isCreating ? 45 : 0 }}
                 transition={{ duration: 0.2, ease: "easeInOut" }}>
                 <Plus className="size-5" />
@@ -168,7 +167,7 @@ export function CreationMode({
                   if (e.key === "Enter") handleCreateClick();
                 }}
                 placeholder=""
-                className="w-32 px-4 py-2 border rounded-full outline-none text-end text-sm"
+                className="w-32 px-4 py-1.5 border rounded-full outline-none text-end"
               />
             </div>
 

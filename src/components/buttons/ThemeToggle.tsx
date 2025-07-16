@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Moon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../../hooks/useTheme";
-import { ClipPath } from "./ClipPath";
+import { AnimatedTabs } from "./AnimatedTabs";
 import { SunIcon } from "./SunIcon";
 import { SystemIcon } from "./SystemIcon";
 
@@ -72,13 +72,13 @@ export function ThemeToggle() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0 }}
+            transition={{ duration: 0, ease: "easeInOut" }}
             className="flex items-center">
-            <ClipPath
+            <AnimatedTabs
               tabs={tabs.map(({ name, label }) => ({ name: label }))}
               className="bg-transparent"
               activeTab={tabs.find((t) => t.name === activeTheme)?.label ?? ""}
-              onTabChange={(label) => {
+              onTabChange={(label: string) => {
                 const tab = tabs.find((t) => t.label === label);
                 if (tab) setTheme(tab.name);
               }}

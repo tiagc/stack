@@ -7,18 +7,18 @@ export function Footer() {
     <footer className="fixed bottom-0 w-full p-8">
       <div className="flex justify-between items-center">
         <div>
-          <motion.button
-            className="flex justify-center items-center size-10 bg-black dark:bg-white rounded-full"
-            whileTap={{ scale: 0.95 }}>
-            <Menu className="size-5 text-white dark:text-black inline-block" />
+          <motion.button whileTap={{ scale: 0.95 }}>
+            <ThemeToggle />
           </motion.button>
         </div>
 
         <div></div>
 
         <div>
-          <motion.button whileTap={{ scale: 0.95 }}>
-            <ThemeToggle />
+          <motion.button
+            className="flex justify-center items-center size-10 bg-black dark:bg-white rounded-full"
+            whileTap={{ scale: 0.95 }}>
+            <Menu className="size-5 text-white dark:text-black inline-block" />
           </motion.button>
         </div>
       </div>
