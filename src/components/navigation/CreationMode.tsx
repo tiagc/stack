@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { LucidePlus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 interface CreateProps {
@@ -61,7 +61,7 @@ export function CreationMode({
   return (
     <div className="bg-white dark:bg-black w-full z-50">
       <div className="p-4">
-        <div className="flex justify-between items-center px-4">
+        <div className="flex justify-between items-center mb-4">
           <div className="w-[80px] flex justify-start">
             <AnimatePresence>
               {isCreating && (
@@ -82,12 +82,18 @@ export function CreationMode({
           <div className="w-[80px] flex justify-end">
             <motion.button
               onClick={handleCreateClick}
-              className={`bg-black text-white dark:bg-white dark:text-black rounded-full px-3 py-2 ${
+              whileTap={{ scale: 0.95 }}
+              className={`flex items-center gap-1 bg-black text-white dark:bg-white dark:text-black rounded-full px-3 py-2 ${
                 isCreating
                   ? "opacity-60 transition duration-300"
                   : "transition duration-300"
-              }`}
-              whileTap={{ scale: 0.95 }}>
+              }`}>
+              <motion.div
+                whileTap={{ scale: 0.95 }}
+                animate={{ rotate: isCreating ? 45 : 0 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}>
+                <Plus className="size-5" />
+              </motion.div>
               Create
             </motion.button>
           </div>
@@ -95,7 +101,7 @@ export function CreationMode({
 
         {isCreating && (
           <motion.div
-            className="my-4 px-4 space-y-6"
+            className="space-y-6"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}>
             <input
@@ -110,7 +116,7 @@ export function CreationMode({
               className="w-full text-2xl text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-300 bg-transparent outline-none border-none antialiased"
             />
 
-            <hr className="border-gray-300" />
+            <hr className="border-gray-100 dark:border-[#1F1F1F]" />
 
             {/* suggested */}
             <div className="space-y-4">
@@ -145,7 +151,7 @@ export function CreationMode({
               </div>
             </div>
 
-            <hr className="border-gray-300" />
+            <hr className="border-gray-100 dark:border-[#1F1F1F]" />
 
             {/* daily goal */}
             <div className="flex items-center justify-between">
@@ -166,7 +172,7 @@ export function CreationMode({
               />
             </div>
 
-            <hr className="border-gray-300" />
+            <hr className="border-gray-100 dark:border-[#1F1F1F]" />
 
             {/* days */}
             <div className="space-y-4">
@@ -199,9 +205,9 @@ export function CreationMode({
               </div>
             </div>
 
-            <hr className="border-gray-300" />
+            <hr className="border-gray-100 dark:border-[#1F1F1F]" />
 
-            <div className="flex items-center justify-end">
+            {/* <div className="flex items-center justify-end">
               <button
                 type="button"
                 onClick={handleCreateClick}
@@ -216,7 +222,7 @@ export function CreationMode({
                 <span>Stack</span>
                 <LucidePlus className="size-4" />
               </button>
-            </div>
+            </div> */}
           </motion.div>
         )}
       </div>

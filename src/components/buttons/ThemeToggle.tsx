@@ -51,7 +51,7 @@ export function ThemeToggle() {
       initial={false}
       animate={{
         width: open ? 220 : 40,
-        backgroundColor: open ? "transparent" : "#000",
+        backgroundColor: "transparent",
       }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       style={{ overflow: "hidden" }}>

@@ -10,7 +10,7 @@ export function Footer() {
           <motion.button
             className="flex justify-center items-center size-10 bg-black dark:bg-white rounded-full"
             whileTap={{ scale: 0.95 }}>
-            <Menu className="size-6 text-white dark:text-black inline-block" />
+            <Menu className="size-5 text-white dark:text-black inline-block" />
           </motion.button>
         </div>
 
