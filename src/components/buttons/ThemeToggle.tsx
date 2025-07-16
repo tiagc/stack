@@ -1,11 +1,10 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Moon } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "../../hooks/useTheme";
 import { AnimatedTabs } from "./AnimatedTabs";
-import { SunIcon } from "./SunIcon";
 import { SystemIcon } from "./SystemIcon";
 
 type Theme = "system" | "light" | "dark";
@@ -38,7 +37,7 @@ export function ThemeToggle() {
       case "system":
         return <SystemIcon className="size-5" />;
       case "light":
-        return <SunIcon className="size-5" />;
+        return <Sun className="size-5" />;
       case "dark":
         return <Moon className="size-5" />;
     }
