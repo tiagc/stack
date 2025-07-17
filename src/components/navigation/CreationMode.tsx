@@ -24,9 +24,10 @@ export function CreationMode({
 
   let suggestions = [
     { label: "Meditate", bgColor: "bg-stackGreen" },
-    { label: "Run", bgColor: "bg-stackBlue" },
+    { label: "Run", bgColor: "bg-stackRed" },
     { label: "Read a book", bgColor: "bg-stackYellow" },
-    { label: "Have sex", bgColor: "bg-stackRed" },
+    { label: "Drink water", bgColor: "bg-stackBlue" },
+    { label: "Have sex", bgColor: "bg-stackMint" },
   ];
 
   const handleCancelClick = () => {
@@ -102,7 +103,9 @@ export function CreationMode({
           <motion.div
             className="space-y-6"
             initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}>
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}>
             <input
               ref={inputRef}
               type="text"
@@ -117,42 +120,38 @@ export function CreationMode({
 
             <hr className="border-gray-100 dark:border-[#1F1F1F]" />
 
-            {/* suggested */}
             <div className="space-y-4">
               <h3 className="text-sm text-gray-400 dark:text-gray-300">
                 Suggested
               </h3>
 
-              <div className="relative">
-                <div className="overflow-x-auto scrollbar-hide">
-                  <div className="flex gap-2 flex-nowrap whitespace-nowrap">
-                    {suggestions.map(({ label, bgColor }) => {
-                      const isSelected = newStackName === label;
+              <div className="-mx-4 overflow-x-auto scrollbar-hide">
+                <div className="flex gap-2 flex-nowrap whitespace-nowrap px-4">
+                  {suggestions.map(({ label, bgColor }) => {
+                    const isSelected = newStackName === label;
 
-                      return (
-                        <motion.button
-                          key={label}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => setNewStackName(label)}
-                          aria-pressed={isSelected}
-                          className={`text-sm px-4 font-semibold py-2 rounded-full transition-colors duration-300 shrink-0
+                    return (
+                      <motion.button
+                        key={label}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => setNewStackName(label)}
+                        aria-pressed={isSelected}
+                        className={`text-sm px-4 font-semibold py-2 rounded-full transition-colors duration-300 shrink-0
                           ${
                             isSelected
                               ? "bg-black text-white dark:bg-white dark:text-black"
                               : `${bgColor} text-black`
                           }`}>
-                          {label}
-                        </motion.button>
-                      );
-                    })}
-                  </div>
+                        {label}
+                      </motion.button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
 
             <hr className="border-gray-100 dark:border-[#1F1F1F]" />
 
-            {/* daily goal */}
             <div className="flex items-center justify-between">
               <h3 className="text-sm text-gray-400 dark:text-gray-300">
                 Daily goal
@@ -173,7 +172,6 @@ export function CreationMode({
 
             <hr className="border-gray-100 dark:border-[#1F1F1F]" />
 
-            {/* days */}
             <div className="space-y-4">
               <h3 className="text-sm text-gray-400 dark:text-gray-300">Days</h3>
               <div className="flex flex-wrap justify-between">
