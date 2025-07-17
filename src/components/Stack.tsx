@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 
 export function Stack(props: {
@@ -8,62 +8,55 @@ export function Stack(props: {
   days: string[];
   goalPerDay: number;
   currentProgress: number;
-  onIncrement: () => void;
+  isExpanded: boolean;
+  onToggle: () => void;
   onDelete: () => void;
 }) {
-  const progressPercent = Math.min(
-    (props.currentProgress / props.goalPerDay) * 100,
-    100
-  );
-
   return (
-    <motion.ul className="relative">
-      <motion.li
-        onClick={props.onIncrement}
-        className="text-black dark:text-white font-bold text-2xl rounded-full mx-6 mb-4 px-3 py-6 flex items-center justify-between overflow-hidden relative cursor-pointer border border-black dark:border-white"
-        whileTap={{ scale: 0.95 }}
-        initial={{ opacity: 0, y: -40, scale: 0.85 }}
-        animate={{
-          opacity: 1,
-          y: 0,
-          scale: 1.05,
-          transition: {
-            type: "spring",
-            stiffness: 300,
-            damping: 20,
-            bounce: 0.4,
-          },
-        }}
-        exit={{
-          opacity: 0,
-          y: -40,
-          scale: 0.8,
-          transition: { duration: 0.3, ease: "easeInOut" },
-        }}>
-        <motion.div
-          className={`absolute top-0 left-0 h-full ${props.color} rounded-full z-0`}
-          initial={false}
-          animate={{ width: `${progressPercent}%` }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        />
-        <div className="relative z-10 flex items-center justify-between w-full">
-          <span className="ml-3">{props.label}</span>
-          <div className="flex items-center gap-4 pr-2">
-            <span className="text-sm text-gray-400 font-normal">
-              {props.goalPerDay}
-            </span>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                props.onDelete();
-              }}
-              className="rounded-full transition duration-150 ease-in hover:bg-gray-200 p-1"
-              aria-label={`Delete habit ${props.label}`}>
-              <X className="w-6 h-6" />
-            </button>
-          </div>
+    <ul className="relative">
+      <li
+        onClick={props.onToggle}
+        className={`text-black dark:text-white rounded-3xl mx-4 px-4 mb-4 py-6 border border-black dark:border-white relative overflow-hidden cursor-pointer ${
+          props.isExpanded ? "pb-auto" : ""
+        }`}>
+        {/* stack header */}
+        <div className="flex items-center justify-between w-full">
+          <span className="font-bold text-2xl">{props.label}</span>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              props.onDelete();
+            }}
+            className="rounded-lg hover:bg-gray-100 dark:hover:bg-[#1F1F1F] p-0.5 transition-colors duration-200"
+            aria-label={`Delete ${props.label}`}>
+            <X className="size-6" />
+          </button>
         </div>
-      </motion.li>
-    </motion.ul>
+
+        {/* expanded */}
+        <AnimatePresence>
+          {props.isExpanded && (
+            <motion.div
+              className="mt-4 text-sm text-black dark:text-white"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm">Progress</span>
+                <span className="text-sm">
+                  {props.currentProgress} / {props.goalPerDay}
+                </span>
+              </div>
+
+              <div className="text-xs">
+                <span className="text-gray-400">Days: </span>
+                {props.days.length > 0 ? props.days.join(", ") : "None"}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </li>
+    </ul>
   );
 }

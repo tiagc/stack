@@ -29,17 +29,8 @@ const stackColors = [
 
 function App() {
   const [stacks, setStacks] = useState<StackItem[]>([]);
+  const [expandedId, setExpandedId] = useState<number | null>(null);
   const [isCreating, setIsCreating] = useState(false);
-
-  const incrementProgress = (id: number) => {
-    setStacks((prev) =>
-      prev.map((stack) =>
-        stack.id === id && stack.currentProgress < stack.goalPerDay
-          ? { ...stack, currentProgress: stack.currentProgress + 1 }
-          : stack
-      )
-    );
-  };
 
   const getRandomColor = () =>
     stackColors[Math.floor(Math.random() * stackColors.length)];
@@ -84,8 +75,11 @@ function App() {
             <Stack
               key={stack.id}
               {...stack}
+              isExpanded={expandedId === stack.id}
+              onToggle={() =>
+                setExpandedId((prev) => (prev === stack.id ? null : stack.id))
+              }
               onDelete={() => deleteStack(stack.id)}
-              onIncrement={() => incrementProgress(stack.id)}
             />
           ))}
         </div>
