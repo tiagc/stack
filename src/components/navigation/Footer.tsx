@@ -4,15 +4,13 @@ import { ThemeToggle } from "../buttons/ThemeToggle";
 
 export function Footer() {
   return (
-    <footer className="fixed bottom-0 w-full p-8">
+    <footer className="fixed bottom-0 z-50 p-8 w-full custom-padding">
       <div className="flex justify-between items-center">
         <div>
           <motion.button whileTap={{ scale: 0.95 }}>
             <ThemeToggle />
           </motion.button>
         </div>
-
-        <div></div>
 
         <div>
           <motion.button

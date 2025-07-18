@@ -2,8 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* * {
+  outline: 1px solid red;
+} */
+
 body {
   @apply font-neue tracking-tight bg-white dark:bg-black;
+}
+
+@media (min-width: 768px) {
+  .custom-padding {
+    padding-left: max((100% - 40rem) / 2, 2rem);
+    padding-right: max((100% - 40rem) / 2, 2rem);
+  }
 }
 
 .scrollbar-hide {

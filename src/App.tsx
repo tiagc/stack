@@ -56,36 +56,38 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen">
-      <CreationMode
-        onNewStack={addNewStack}
-        isCreating={isCreating}
-        setIsCreating={setIsCreating}
-      />
+    <>
+      <div className="relative min-h-screen custom-padding">
+        <CreationMode
+          onNewStack={addNewStack}
+          isCreating={isCreating}
+          setIsCreating={setIsCreating}
+        />
 
-      <motion.div layout transition={{ duration: 0.2, ease: "easeInOut" }}>
-        {stacks.length > 0 && (
-          <h2 className="sticky top-0 z-10 pt-2 px-4 text-sm text-gray-400 dark:text-gray-300">
-            Habits and routines
-          </h2>
-        )}
+        <motion.div layout transition={{ duration: 0.2, ease: "easeInOut" }}>
+          {stacks.length > 0 && (
+            <h2 className="sticky top-0 z-10 pt-2 px-4 text-sm text-gray-400 dark:text-gray-300">
+              Habits and routines
+            </h2>
+          )}
 
-        <div className="mt-4">
-          {stacks.map((stack) => (
-            <Stack
-              key={stack.id}
-              {...stack}
-              isExpanded={expandedId === stack.id}
-              onToggle={() =>
-                setExpandedId((prev) => (prev === stack.id ? null : stack.id))
-              }
-              onDelete={() => deleteStack(stack.id)}
-            />
-          ))}
-        </div>
-      </motion.div>
+          <div className="mt-4">
+            {stacks.map((stack) => (
+              <Stack
+                key={stack.id}
+                {...stack}
+                isExpanded={expandedId === stack.id}
+                onToggle={() =>
+                  setExpandedId((prev) => (prev === stack.id ? null : stack.id))
+                }
+                onDelete={() => deleteStack(stack.id)}
+              />
+            ))}
+          </div>
+        </motion.div>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
 
