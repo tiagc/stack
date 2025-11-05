@@ -16,7 +16,7 @@ export function Stack(props: {
     <ul className="relative">
       <li
         onClick={props.onToggle}
-        className={`text-black dark:text-white rounded-3xl mx-4 px-4 mb-4 py-6 relative overflow-hidden cursor-pointer ${
+        className={`text-black dark:text-white rounded-full mx-4 px-8 mb-1 py-6 relative overflow-hidden cursor-pointer ${
           props.color
         } ${props.isExpanded ? "pb-auto" : ""}`}>
         {/* stack header */}
